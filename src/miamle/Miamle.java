@@ -4,6 +4,8 @@ import modeles.Event;
 import modeles.Participant;
 import enumerations.Dish;
 import java.time.LocalDate;
+import java.util.HashMap;
+import modeles.App;
 
 /**
  *
@@ -15,54 +17,61 @@ public class Miamle {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        
+        HashMap<LocalDate, Event> mesEvents = new HashMap<>();
+        
         // Créer un événement
         Event anniv = new Event();
-        LocalDate d = LocalDate.of(2022, 9, 10);
+        LocalDate d = LocalDate.of(2006, 4, 11);
         anniv.setDate(d);
 
         // Créer 2 participants : herbert et alf
-        Participant herbert = new Participant("Caffarel", "Herbert");
-        Participant alf = new Participant("Danlta", "Alphonse");
+        Participant jj = new Participant("Goldman", "JJ");
+        Participant johnny = new Participant("Haliday", "Johnny");
 
         // Ajouter les plats amenés par ces deux personnes à leur liste de plats
-        herbert.addDish(Dish.ENTREE, 2);
-        herbert.addDish(Dish.PLAT, 2);
-        herbert.addDish(Dish.DESSERT, 2);
-        herbert.addDish(Dish.BOISSON, 2);
-        herbert.setNbPersons(2);
+        jj.addDish(Dish.ENTREE, 3);
+        jj.addDish(Dish.PLAT, 1);
+        jj.addDish(Dish.DESSERT, 4);
+        jj.addDish(Dish.BOISSON, 6);
+        jj.setNbPersons(2);
 
-        alf.addDish(Dish.ENTREE, 5);
-        alf.addDish(Dish.PLAT, 5);
-        alf.addDish(Dish.DESSERT, 3);
-        alf.setNbPersons(3);
-        alf.setComment("Gourmands");
+        johnny.addDish(Dish.ENTREE, 0);
+        johnny.addDish(Dish.PLAT, 0);
+        johnny.addDish(Dish.DESSERT, 0);
+        johnny.setNbPersons(3);
+        johnny.setComment("Gourmands");
 
         // Ajouter ces deux personnes à l'événement
-        anniv.addParticipant(alf);
-        anniv.addParticipant(herbert);
-        anniv.addParticipant(new Participant());
+        anniv.addParticipant(jj);
+        anniv.addParticipant(johnny);
+        //anniv.addParticipant(new Participant());
 
         // Afficher l'événement
-        System.out.println(anniv.consoleFormat());
+        //System.out.println(anniv.consoleFormat());
 
         // Sauvegarder l'événement en texte
-        anniv.saveToText("anniv.txt");
+        //anniv.saveToText("anniv.txt");
 
         // Récupérer l'événement en texte dans un autre objet
         Event e = Event.loadFromText("anniv.txt");
         // On l'affiche pour voir si c'est la même chose que anniv
-        System.out.println("L'événement chargé depuis le fichier texte : ");
-        System.out.println(e.consoleFormat());
+        //System.out.println("L'événement chargé depuis le fichier texte : ");
+        //System.out.println(e.consoleFormat());
 
         // Sauvegarder l'événement en binaire
-        anniv.saveToBin("anniv.bin");
+        //anniv.saveToBin("anniv.bin");
 
         // Restaurer l'anniversaire dans un autre objet
-        Event newEvent = Event.loadFromBin("anniv.bin");
+        //Event newEvent = Event.loadFromBin("anniv.bin");
         // On l'affiche pour voir si c'est la même chose que anniv
-        System.out.println("L'événement chargé depuis le fichier binaire : ");
-        System.out.println(newEvent.consoleFormat());
+        //System.out.println("L'événement chargé depuis le fichier binaire : ");
+        //System.out.println(newEvent.consoleFormat());
+        
+        mesEvents.put(e.getDate(),e);
+        mesEvents.put(anniv.getDate(), anniv);
+        
+        App test = new App(mesEvents, "Miamle");
     }
 
 }
