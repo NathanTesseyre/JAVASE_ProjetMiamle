@@ -41,8 +41,9 @@ public final class App extends JFrame {
         //System.out.println(tableau.table);
         table = tabInit(events.get(indexSelectedEvent));
 
-        this.currentEventPanel = new JPanel();
-        currentEventPanel.add(table);
+        this.currentEventPanel = new JPanel(new BorderLayout());
+        currentEventPanel.add(table, BorderLayout.CENTER);
+        currentEventPanel.add(table.getTableHeader(), BorderLayout.NORTH);
         this.selector = new JComboBox<>(events);
         this.addParticipant = new JButton("Ajouter");
         this.init();
@@ -101,6 +102,7 @@ public final class App extends JFrame {
         tmp.setComment(JOptionPane.showInputDialog("Remarques :"));
         tmp.setNbPersons(Integer.parseInt(JOptionPane.showInputDialog("Nombre de personnes :")));
         this.events.get(indexSelectedEvent).addParticipant(tmp);
+        this.events.get(indexSelectedEvent).saveToBin(this.events.get(indexSelectedEvent).getName());
         updateTab();
     }
 
@@ -129,7 +131,8 @@ public final class App extends JFrame {
     public void updateTab() {
         this.table = tabInit(events.get(indexSelectedEvent));
         this.currentEventPanel.removeAll();
-        this.currentEventPanel.add(table);
+        currentEventPanel.add(table, BorderLayout.CENTER);
+        currentEventPanel.add(table.getTableHeader(), BorderLayout.NORTH);
         this.currentEventPanel.updateUI();
     }
 }

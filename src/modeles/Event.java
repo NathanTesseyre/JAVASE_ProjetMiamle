@@ -28,6 +28,7 @@ public class Event implements Serializable {
     // Une liste à cause des homonymes
     private List<Participant> participants;
     private LocalDate date;
+    private String name;
 
     public Event() {
         this.participants = new ArrayList<>();
@@ -36,6 +37,10 @@ public class Event implements Serializable {
     public Event(LocalDate date) {
         this();
         this.date = date;
+    }
+    
+    public String getName(){
+        return this.name;
     }
 
     public LocalDate getDate() {
@@ -204,6 +209,7 @@ public class Event implements Serializable {
         Event ev = null;
         try ( ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             ev = (Event) ois.readObject();
+            ev.name = filename;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Event.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -224,7 +230,6 @@ public class Event implements Serializable {
         for (int i = 0; i < participants.size(); i++) {
             tab[i] = participants.get(i).createTabParticipants();
         }
-        //System.out.println(tab[0][0]);
         return tab;
     }
 }
