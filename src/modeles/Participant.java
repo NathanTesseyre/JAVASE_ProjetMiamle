@@ -2,6 +2,7 @@ package modeles;
 
 import enumerations.Dish;
 import java.io.Serializable;
+import static java.lang.String.valueOf;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -143,6 +144,20 @@ public class Participant extends Person implements Serializable {
         p.nbPersons = Integer.parseInt(data[7]);
         p.comment = data[8];
         return p;
+    }
+    
+    public String[] createTabParticipants() {
+        String[] tab = new String[9];
+        tab[0] = getName();
+        tab[1] = getFirstName();
+        tab[2] = phone;
+        tab[3] = valueOf(getDishQuantity(Dish.ENTREE));
+        tab[4] = valueOf(getDishQuantity(Dish.PLAT));
+        tab[5] = valueOf(getDishQuantity(Dish.DESSERT));
+        tab[6] = valueOf(getDishQuantity(Dish.BOISSON));
+        tab[7] = valueOf(nbPersons);
+        tab[8] = comment;
+        return tab;
     }
 
 }

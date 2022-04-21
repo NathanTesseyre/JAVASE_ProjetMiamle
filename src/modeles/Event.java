@@ -213,4 +213,18 @@ public class Event implements Serializable {
         }
         return ev;
     }
+    
+    @Override
+    public String toString(){
+        return this.getDate().toString();
+    }
+    
+    public String[][] createTabEvent() {
+        String[][] tab = new String[participants.size()][9];
+        for (int i = 0; i < participants.size(); i++) {
+            tab[i] = participants.get(i).createTabParticipants();
+        }
+        //System.out.println(tab[0][0]);
+        return tab;
+    }
 }
