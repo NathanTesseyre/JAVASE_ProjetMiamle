@@ -42,6 +42,10 @@ public class Event implements Serializable {
     public String getName(){
         return this.name;
     }
+    
+    public void setName(String newName){
+        this.name = newName;
+    }
 
     public LocalDate getDate() {
         return date;

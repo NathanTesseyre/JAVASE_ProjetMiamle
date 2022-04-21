@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,8 +22,8 @@ public final class App extends JFrame {
 
     private JComboBox<Event> selector;
     private Vector<Event> events;
-    private JPanel currentEventPanel;
-    private JButton addParticipant;
+    private JPanel currentEventPanel, buttonPanel;
+    private JButton addParticipant, createEvent;
     private int indexSelectedEvent;
 
     private JTable table;
@@ -40,12 +41,15 @@ public final class App extends JFrame {
 
         //System.out.println(tableau.table);
         table = tabInit(events.get(indexSelectedEvent));
-
+        this.buttonPanel = new JPanel(new BorderLayout());
         this.currentEventPanel = new JPanel(new BorderLayout());
         currentEventPanel.add(table, BorderLayout.CENTER);
         currentEventPanel.add(table.getTableHeader(), BorderLayout.NORTH);
         this.selector = new JComboBox<>(events);
         this.addParticipant = new JButton("Ajouter");
+        this.createEvent = new JButton("Créer un event");
+        buttonPanel.add(this.addParticipant, BorderLayout.EAST);
+        buttonPanel.add(this.createEvent, BorderLayout.WEST);
         this.init();
     }
 
@@ -55,9 +59,15 @@ public final class App extends JFrame {
         this.add(this.selector, BorderLayout.NORTH);
         this.add(this.currentEventPanel, BorderLayout.CENTER);
 
-        this.add(this.addParticipant, BorderLayout.SOUTH);
+//        this.add(this.addParticipant, BorderLayout.SOUTH);
+//        this.add(this.createEvent, BorderLayout.SOUTH);
+        this.add(buttonPanel, BorderLayout.SOUTH);
         this.addParticipant.addActionListener((ActionEvent e) -> {
             creationParticipant();
+        });
+        
+        this.createEvent.addActionListener((ActionEvent e) -> {
+            createEvent();
         });
 
         this.selector.addItemListener((ItemEvent e) -> {
@@ -102,6 +112,7 @@ public final class App extends JFrame {
         tmp.setComment(JOptionPane.showInputDialog("Remarques :"));
         tmp.setNbPersons(Integer.parseInt(JOptionPane.showInputDialog("Nombre de personnes :")));
         this.events.get(indexSelectedEvent).addParticipant(tmp);
+        
         this.events.get(indexSelectedEvent).saveToBin(this.events.get(indexSelectedEvent).getName());
         updateTab();
     }
@@ -135,4 +146,14 @@ public final class App extends JFrame {
         currentEventPanel.add(table.getTableHeader(), BorderLayout.NORTH);
         this.currentEventPanel.updateUI();
     }
+    
+    public void createEvent() {
+        System.out.println("ok");       
+        Event e = new Event();
+        e.setDate(LocalDate.parse(JOptionPane.showInputDialog("Date en format AAAA-MM-JJ :")));
+        e.setName(JOptionPane.showInputDialog("Quel est le nom de votre event ?")+".mle");
+        events.add(e); 
+        e.saveToBin(e.getName());  
+    }
+    
 }
